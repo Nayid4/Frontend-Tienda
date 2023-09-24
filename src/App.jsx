@@ -1,33 +1,30 @@
+/* eslint-disable react/jsx-no-target-blank */
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import Header from "./Components/Header"
+import Home from "./Pages/Home"
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  // Estado para saber si un usuario inicio sesion
+  const [auth, setAuth] = useState({ 
+    auth: false,
+    userName: ""
+  });
+
+  // Funcion para cambiar el estado de actividad del cliente
+  const cambiarEstadoAuth = (nuevoEstado) => {
+    setAuth(nuevoEstado);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header  auth={auth} cambiarEstadoAuth={cambiarEstadoAuth}/> 
+      <Routes>
+        <Route path='/' element={<Home />}/>
+      </Routes>
+      
     </>
   )
 }
