@@ -3,7 +3,9 @@ import { useState } from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Header from "./Components/Header"
+import Footer from "./Components/Footer"
 import Home from "./Pages/Home"
+import { Box } from '@mui/material'
 
 function App() {
 
@@ -19,13 +21,13 @@ function App() {
   };
 
   return (
-    <>
+    <Box>
       <Header  auth={auth} cambiarEstadoAuth={cambiarEstadoAuth}/> 
       <Routes>
         <Route path='/' element={<Home />}/>
       </Routes>
-      
-    </>
+      <Footer />
+    </Box>
   )
 }
 

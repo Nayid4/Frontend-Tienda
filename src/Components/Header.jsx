@@ -82,8 +82,8 @@ export default function Header({auth, cambiarEstadoAuth }){
                 alt="Mi Imagen"
                 src={Logo}
                 style={{
-                    width: '60px',
-                    height: '60px',
+                    width: '70px',
+                    height: '70px',
                     marginRight:'10px' ,
                     borderRadius: '50%', // Para hacerlo circular
                 }}
