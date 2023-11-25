@@ -9,11 +9,11 @@ import {
   Menu,
   IconButton,
   Box,
-  Typography,
   AppBar,
   Container,
   Toolbar,
   Avatar,
+  Link,
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButtom from "./IconButtom";
@@ -63,7 +63,40 @@ export default function Header({auth, cambiarEstadoAuth }){
         path:"Cerrar",
       }
     ];
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
   
+    // Categorias de productos
+    const categorias = [
+        {
+            titulo: "Hogar",
+            imagen: "/src/assets/Categorias/Hogar-1.jpg",
+            path: "/Hogar"
+        },
+        {
+            titulo: "Tecnologia",
+            imagen: "/src/assets/Categorias/Tecnologia-1.jpg",
+            path: "/Tecnologia"
+        },
+        {
+            titulo: "Moda",
+            imagen: "/src/assets/Categorias/Moda-1.jpg",
+            path: "/Moda"
+        },
+        {
+            titulo: "Accesorios",
+            imagen: "/src/assets/Categorias/Accesorios-1.jpg",
+            path: "/Accesorios"
+        }
+    ]
+
     return (
       <AppBar color="third" sx={{
         backdropFilter:'blur(5px) saturate(131%)',
@@ -75,19 +108,19 @@ export default function Header({auth, cambiarEstadoAuth }){
         <Container maxWidth="x1" color="inherit"> 
           <Toolbar disableGutters>
             {/*- - Icono Responsive - - */}
-            {/*<Link to="/" sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
-              <img className="logo-main" src={Logo} alt="" />
-    </Link>*/}
-            <Avatar
-                alt="Mi Imagen"
-                src={Logo}
-                style={{
-                    width: '70px',
-                    height: '70px',
-                    marginRight:'10px' ,
-                    borderRadius: '50%', // Para hacerlo circular
-                }}
-            />
+            <Link  href="/" underline="none" sx={{mr: 1, }}>
+                <Avatar
+                    alt="Mi Imagen"
+                    src={Logo}
+                    style={{
+                        width: '70px',
+                        height: '70px',
+                        borderRadius: '50%', // Para hacerlo circular
+                    }}
+                />
+            </Link>
+    
+            
   
             {/*- - Menu Responsive - -*/}
             <Box sx={{ justifyContent: 'flex-end',flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -126,9 +159,37 @@ export default function Header({auth, cambiarEstadoAuth }){
               >
                 {/*- - Generamos los botones del menu - -*/}
                 {ListaMenu.map((page) => (
-                  <MenuItem key={page.titulo} onClick={() => navigate(page.path)}>
-                    <Typography textAlign="center">{page.titulo}</Typography>
-                  </MenuItem>
+                    page.titulo === "Categorias" ? (
+                        <Box key={page.titulo}>
+                            <Button
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            color="secondary"
+                            onClick={handleClick}
+                            >
+                            {page.titulo}
+                            </Button>
+                            <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                            >
+                            {categorias.map((cat, index)=> 
+                                <MenuItem key={index} onClick={() => navigate(cat.path)}>{cat.titulo}</MenuItem>
+                            )}
+                            </Menu>
+                        </Box>
+                    ):(
+                        <Button key={page.titulo} sx={{color:"black"}} onClick={() => navigate(page.path)}>
+                            {page.titulo}
+                        </Button>
+                    )
                 ))}
   
                 {/*- - Si no se ha iniciado sesion generamos los botones de registro - -*/}
@@ -164,18 +225,52 @@ export default function Header({auth, cambiarEstadoAuth }){
   
   
             {/*- - Generamos los botones del encabezado - -*/}
-            <Box sx={{ flexGrow: 1,justifyContent: 'flex-start', display: { xs: 'none', md: 'flex' } }}>
-              {ListaMenu.map((page) => (
+            <Box sx={{ flexGrow: 1, justifyContent: 'flex-start', display: { xs: 'none', md: 'flex' } }}>
+            {ListaMenu.map((page) => (
+                page.titulo === "Categorias" ? (
+                <Box key={page.titulo} sx={{mt:2}}>
+                    <Button
+                    id="basic-button"
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    color="secondary"
+                    onClick={handleClick}
+                    >
+                    {page.titulo}
+                    </Button>
+                    <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                    >
+                    {categorias.map((cat, index)=> 
+                        <MenuItem key={index} onClick={() => navigate(cat.path)}>{cat.titulo}</MenuItem>
+                    )}
+                    </Menu>
+                </Box>
+                ) : (
                 <Button
-                  key={page.path}
-                  onClick={() => navigate(page.path)}
-                  sx={{ transition: "0.2s",
-                  "&:hover": { transform: "scale(1.05)"},my: 2, color: 'black', display: 'block' }}
+                    key={page.path}
+                    onClick={() => navigate(page.path)}
+                    sx={{
+                    transition: "0.2s",
+                    "&:hover": { transform: "scale(1.05)" },
+                    my: 2,
+                    color: 'black',
+                    display: 'block'
+                    }}
                 >
-                  {page.titulo}
+                    {page.titulo}
                 </Button>
-              ))}
+                )
+            ))}
             </Box>
+
   
             {/*- - Ponemos los botones de registro o avatar del usuario - -*/}
             <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' }}}>

@@ -6,6 +6,10 @@ import Header from "./Components/Header"
 import Footer from "./Components/Footer"
 import Home from "./Pages/Home"
 import { Box } from '@mui/material'
+import About from "./Pages/About-us"
+import SignIn from "./Pages/Sign-in"
+import SignUp from "./Pages/Sign-up"
+import Product from "./Pages/Products"
 
 function App() {
 
@@ -25,6 +29,13 @@ function App() {
       <Header  auth={auth} cambiarEstadoAuth={cambiarEstadoAuth}/> 
       <Routes>
         <Route path='/' element={<Home />}/>
+        <Route path='/about-us' element ={<About/>} />
+        <Route path='/sign-in' element ={<SignIn/>} />
+        <Route path='/sign-up' element ={<SignUp/>} />
+        <Route path='/Hogar' element ={<Product props={{titulo:"Hogar"}}/>} />
+        <Route path='/Tecnologia' element ={<Product props={{titulo:"Tecnologia"}}/>} />
+        <Route path='/Moda' element ={<Product props={{titulo:"Moda"}}/>} />
+        <Route path='/Accesorios' element ={<Product props={{titulo:"Accesorios"}}/>} />
       </Routes>
       <Footer />
     </Box>

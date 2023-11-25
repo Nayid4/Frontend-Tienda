@@ -1,11 +1,12 @@
-import { Box, Grid, Typography} from "@mui/material";
+/* eslint-disable react/prop-types */
+import { Box, Grid, Typography } from "@mui/material"
 import Banner from "../Components/Banner"
-import CardCategory from "../Components/CardCategory";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardProduct from "../Components/CardProduct"
 
-export default function Home(){
+
+export default function Products({props}){
 
     // Responsive del carusel de las categorias
     const responsive = {
@@ -31,33 +32,9 @@ export default function Home(){
 
     // Banner
     const bannerInfo = {
-        titulo: "J/N Products",
+        titulo: props.titulo,
         imagen: ""
     }
-
-    // Categorias de productos
-    const categorias = [
-        {
-            titulo: "Hogar",
-            imagen: "/src/assets/Categorias/Hogar-1.jpg",
-            path: "/Hogar"
-        },
-        {
-            titulo: "Tecnologia",
-            imagen: "/src/assets/Categorias/Tecnologia-1.jpg",
-            path: "/Tecnologia"
-        },
-        {
-            titulo: "Moda",
-            imagen: "/src/assets/Categorias/Moda-1.jpg",
-            path: "/Moda"
-        },
-        {
-            titulo: "Accesorios",
-            imagen: "/src/assets/Categorias/Accesorios-1.jpg",
-            path: "/Accesorios"
-        }
-    ]
 
     // Productos destacados
     const productos = [
@@ -90,15 +67,10 @@ export default function Home(){
         }
     ]
 
-    return (
-        <Box maxWidth='xl'
-        sx={{ mb:10}}
-        style={{ width: '100%' }}
-        >
-           
-           <Banner props={bannerInfo}/>
 
-            {/*- - Categorias - -*/}
+    return (
+        <Box>
+            <Banner props={bannerInfo}/>
             <Grid container 
             sx={{
                 padding: 0,
@@ -107,44 +79,22 @@ export default function Home(){
                 mr:0
               }}
             >
-                {/*- - Categorias - -*/}
-                <Grid item xs={12} sx={{boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.1)'}}>
-                    <Box sx={{ marginBottom: 3 }}>
-                        <Typography
-                            variant="h1"
-                            color="secondary"
-                            sx={{ fontSize: 30, margin: 2, textAlign: "center",fontFamily: 'monospace',
-                            fontWeight: 700,
-                            textDecoration: 'none'}}
-                        >
-                            Categorias
-                        </Typography>
-                        <Carousel showDots={false} responsive={responsive}>
-                            {categorias.map((info, i) => (
-                                <Box key={i} sx={{ margin: 2 }}>
-                                    <CardCategory key={i} datos={info} />
-                                </Box>
-                            ))}
-                        </Carousel>
-                    </Box>
-                </Grid>
-
                 {/*- - Destacados - -*/}
                 <Grid item xs={12}>
                     <Box sx={{ marginBottom: 3 }}>
                         <Typography
                             variant="h1"
                             color="secondary"
-                            sx={{ fontSize: 30, margin: 2, textAlign: "center",fontFamily: 'monospace',
+                            sx={{ fontSize: 30, margin: 4, textAlign: "center",fontFamily: 'monospace',
                             fontWeight: 700,
                             textDecoration: 'none'}}
                         >
-                            Destacados
+                            Productos de {props.titulo}
                         </Typography>
 
                         <Carousel showDots={false} responsive={responsive}>
                             {productos.map((info, i) => (
-                                <Box key={i} sx={{ margin: 2 }}>
+                                <Box key={i} sx={{ m:2 }}>
                                     <CardProduct key={i} product={info}
                                     />
                                 </Box>
